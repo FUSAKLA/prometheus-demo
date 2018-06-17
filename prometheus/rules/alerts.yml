@@ -1,0 +1,9 @@
+groups:
+- name: demo-alert
+  rules:
+  - alert: HighRequestCount
+    expr: increase(http_request_duration_seconds_count{instance="fusakla.cz", endpoint="/demo"}[20s]) > 10
+    labels:
+      severity: demo
+    annotations:
+      title: "There is more than 10 requests per 20s on fusakla.cz/demo"

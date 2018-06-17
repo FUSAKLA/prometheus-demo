@@ -1,0 +1,49 @@
+
+version: '3.1'
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}
+
+services:
+
+  error-server:
+    image: "fusakla/error-server:0.0.1"
+    ports:
+      - 8080:8080
+
+  prometheus:
+    image: prom/prometheus:v2.3.0
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - 9090:9090
+    restart: always
+
+
+  grafana:
+    image: grafana/grafana:5.2.0-beta1
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/dashboards:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./grafana/config.monitoring
+    restart: always
+
+
+  alertmanager:
+    image: prom/alertmanager:0.14.0
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    restart: always
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'

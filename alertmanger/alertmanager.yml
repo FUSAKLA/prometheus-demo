@@ -1,0 +1,20 @@
+
+route:
+    receiver: 'metrics-meetup-mailinglist'
+
+global:
+  smtp_smarthost: "foo.bar:25"
+  smtp_from: "user@foo.bar"
+  smtp_auth_username: 'user'
+  smtp_auth_password: 'xxx'
+
+receivers:
+    - name: 'metrics-meetup-mailinglist'
+      to: "mailinglist@foo.bar"
+      text: "Hi there! If you are reading this, it means all went well during the Prometheus demo (...unbeleavable...).
+             Here is link to my presentation if you want to check it one more time.
+
+             And if you don't know why are you reading this, you shoud have come!
+
+             See you next time
+             FUSAKLA"
