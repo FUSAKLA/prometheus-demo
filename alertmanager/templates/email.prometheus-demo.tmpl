@@ -1,0 +1,461 @@
+{{ define "email.prometheus-demo.html" }}
+
+<!--
+Style and HTML derived from https://github.com/mailgun/transactional-email-templates
+
+
+The MIT License (MIT)
+
+Copyright (c) 2014 Mailgun
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sellstrong
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Prometheus demo</title>
+  <style>
+    /* -------------------------------------
+    GLOBAL
+    A very basic CSS reset
+------------------------------------- */
+
+    * {
+      margin: 0;
+      font-family: 'Oxygen';
+      font-size: 22px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    #Layer_1 {
+      height: 30pt;
+      width: 30pt;
+    }
+
+    body {
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: none;
+      width: 100% !important;
+      height: 100%;
+      line-height: 1.6em;
+      /* 1.6em * 14px = 22.4px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
+      /*line-height: 22px;*/
+    }
+
+    /* Let's make sure all tables have defaults */
+
+    table td {
+      vertical-align: top;
+    }
+
+    /* -------------------------------------
+    BODY & CONTAINER
+------------------------------------- */
+
+    body {
+      background-color: #e6522c;
+    }
+
+    .body-wrap {
+      background-color: #e6522c;
+      width: 100%;
+    }
+
+
+
+    .container {
+      display: block !important;
+      max-width: 600px !important;
+      margin: 0 auto !important;
+      /* makes it centered */
+      clear: both !important;
+    }
+
+    .content {
+      max-width: 600px;
+      margin: 0 auto;
+      display: block;
+      padding: 20px;
+    }
+
+    /* -------------------------------------
+    HEADER, FOOTER, MAIN
+------------------------------------- */
+
+    .main {
+      background-color: #FFFFFF;
+      border-radius: 3px;
+      border: solid 3px #222222;
+    }
+
+    .content-wrap {
+      padding: 30px;
+    }
+
+    .content-block {
+      padding: 0 0 20px;
+      color: #222222;
+    }
+
+    .invisible {
+      color: #d2d2d2;
+    }
+
+    .header {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .footer {
+      width: 100%;
+      clear: both;
+      color: #999;
+      padding: 20px;
+    }
+
+    .footer p,
+    .footer a,
+    .footer td {
+      color: #212121;
+      font-size: 12px;
+    }
+
+    .table-head {
+      background-color: #222222;
+    }
+
+    /* -------------------------------------
+    TYPOGRAPHY
+------------------------------------- */
+
+    h1,
+    h2,
+    h3 {
+      font-family: 'Oxygen';
+      font-size: 22px;
+      color: #FFFFFF;
+      line-height: 1.2em;
+      font-weight: 400;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 500;
+      /* 1.2em * 32px = 38.4px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
+      /*line-height: 38px;*/
+    }
+
+    h2 {
+      font-size: 24px !important;
+      /* 1.2em * 24px = 28.8px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
+      /*line-height: 29px;*/
+      color: #222222;
+    }
+
+    h3 {
+      font-size: 18px;
+      /* 1.2em * 18px = 21.6px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
+      /*line-height: 22px;*/
+      color: #222222;
+      margin-bottom: 10pt;
+    }
+
+    h4 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    p,
+    ul,
+    ol {
+      margin-bottom: 10px;
+      font-weight: normal;
+    }
+
+    p li,
+    ul li,
+    ol li {
+      margin-left: 5px;
+      list-style-position: inside;
+    }
+
+    /* -------------------------------------
+    LINKS & BUTTONS
+------------------------------------- */
+
+    a {
+      color: #212121;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #e6522c;
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      text-decoration: none;
+      color: #FFF;
+      background-color: #348eda;
+      border: solid #348eda;
+      border-width: 10px 20px;
+      line-height: 2em;
+      /* 2em * 14px = 28px, use px to get airier line-height also in Thunderbird, and Yahoo!, Outlook.com, AOL webmail clients */
+      /*line-height: 28px;*/
+      font-weight: bold;
+      text-align: center;
+      cursor: pointer;
+      display: inline-block;
+      border-radius: 5px;
+      text-transform: capitalize;
+    }
+
+    /* -------------------------------------
+    OTHER STYLES THAT MIGHT BE USEFUL
+------------------------------------- */
+
+    .last {
+      margin-bottom: 0;
+    }
+
+    .first {
+      margin-top: 0;
+    }
+
+    .aligncenter {
+      text-align: center;
+    }
+
+    .alignright {
+      text-align: right;
+    }
+
+    .alignleft {
+      text-align: left;
+    }
+
+    .clear {
+      clear: both;
+    }
+
+    /* -------------------------------------
+    ALERTS
+    Change the class depending on warning email, good email or bad email
+------------------------------------- */
+
+    .alert {
+      font-size: 16px;
+      color: #fff;
+      font-weight: 500;
+      padding: 20px;
+      text-align: center;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .alert a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    .alert.alert-warning {
+      background-color: ##E6522C;
+    }
+
+    .alert.alert-bad {
+      background-color: #D0021B;
+    }
+
+    .alert.alert-good {
+      background-color: #68B90F;
+    }
+
+    /* -------------------------------------
+    INVOICE
+    Styles for the billing table
+------------------------------------- */
+
+    .invoice {
+      margin: 40px auto;
+      text-align: left;
+      width: 80%;
+    }
+
+    .invoice td {
+      padding: 5px 0;
+    }
+
+    .invoice .invoice-items {
+      width: 100%;
+    }
+
+    .invoice .invoice-items td {
+      border-top: #eee 1px solid;
+    }
+
+    .invoice .invoice-items .total td {
+      border-top: 2px solid #333;
+      border-bottom: 2px solid #333;
+      font-weight: 700;
+    }
+
+    /* -------------------------------------
+    RESPONSIVE AND MOBILE FRIENDLY STYLES
+------------------------------------- */
+
+    @media only screen and (max-width: 640px) {
+      body {
+        padding: 0 !important;
+        background-color: #212121 !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-weight: 800 !important;
+      }
+
+      h1 {
+        font-size: 22px !important;
+      }
+
+      h2 {
+        font-size: 18px !important;
+      }
+
+      h3 {
+        font-size: 16px !important;
+      }
+
+      .container {
+        padding: 0 !important;
+        width: 100% !important;
+      }
+
+      .content {
+        padding: 0 !important;
+      }
+
+      .content-wrap {
+        padding: 10px !important;
+      }
+
+      .invoice {
+        width: 100% !important;
+      }
+    }
+  </style>
+  <link href='https://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet'>
+  <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"> -->
+</head>
+
+<body itemscope itemtype="http://schema.org/EmailMessage">
+
+  <table class="body-wrap">
+    <tr>
+      <td></td>
+      <td class="container" width="600">
+        <div class="content">
+          <table class="main" width="100%" cellpadding="0" cellspacing="0">
+            <tr class="table-head">
+              <td class="alert alert-warning">
+                <svg alt="Prometheus logo" title="Prometheus logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="115.333px" height="114px" viewBox="0 0 115.333 114" enable-background="new 0 0 115.333 114" xml:space="preserve">
+                  <g>
+                    <path fill="#EEEEEE" d="M56.667,0.667C25.372,0.667,0,26.036,0,57.332c0,31.295,25.372,56.666,56.667,56.666   s56.666-25.371,56.666-56.666C113.333,26.036,87.961,0.667,56.667,0.667z M56.667,106.722c-8.904,0-16.123-5.948-16.123-13.283   H72.79C72.79,100.773,65.571,106.722,56.667,106.722z M83.297,89.04H30.034v-9.658h53.264V89.04z M83.106,74.411h-52.92   c-0.176-0.203-0.356-0.403-0.526-0.609c-5.452-6.62-6.736-10.076-7.983-13.598c-0.021-0.116,6.611,1.355,11.314,2.413   c0,0,2.42,0.56,5.958,1.205c-3.397-3.982-5.414-9.044-5.414-14.218c0-11.359,8.712-21.285,5.569-29.308   c3.059,0.249,6.331,6.456,6.552,16.161c3.252-4.494,4.613-12.701,4.613-17.733c0-5.21,3.433-11.262,6.867-11.469   c-3.061,5.045,0.793,9.37,4.219,20.099c1.285,4.03,1.121,10.812,2.113,15.113C63.797,33.534,65.333,20.5,71,16   c-2.5,5.667,0.37,12.758,2.333,16.167c3.167,5.5,5.087,9.667,5.087,17.548c0,5.284-1.951,10.259-5.242,14.148   c3.742-0.702,6.326-1.335,6.326-1.335l12.152-2.371C91.657,60.156,89.891,67.418,83.106,74.411z"/>
+                  </g>
+                </svg><h1>Prometheus demo</h1>
+              </td>
+            </tr>
+            <tr>
+              <td class="content-wrap">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td class="content-block">
+                      <strong>Hi there!</strong>
+                      <p>It seems the demo worked as expected<span class="invisible">, to my suprise.</span></p>
+                      <p>Thank's for comming and hopefully you learned something useful and iteresting today.</p>
+                      </br>
+                      <p>Here is link to repository containing all sources used for the demo and presentation itself</p>
+                      <br />
+                      <a href="https://github.com/FUSAKLA/prometheus-demo"><h2  title="Github"><i class="fab fa-github fa-lg"></i> FUSAKLA/prometheus-demo</h2></a>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="content-block">
+                      <br />
+                      <hr />
+                      <br />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="content-block">
+                      <h3>Contact me!</h3>
+                      <p><i class="fab fa-github"></i> <a href="https://github.com/FUSAKLA" title="Gitgub">FUSAKLA</a></p>
+                      <p><i class="fas fa-envelope"></i> <a href="mailto:m.chodur@seznam.cz" title="Email">m.chodur@seznam.cz</a>, <a href="mailto:i@fusakla.cz" title="Email">i@fusakla.cz</a></p>
+                      <p><i class="fas fa-link"></i> <a href="https://fusakla.cz" title="Web">fusakla.cz</a></p>
+                      <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/fusakla/" title="LinkedIn">Martin Chodur</a></p>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td class="content-block">
+                      <hr />
+                      <br />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="content-block">
+                      <p>In case you don't know why you recieved this, you should have come to today's Metrics and monitoring meetup.</p>
+                      <strong>See you next time!</strong>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+          </table>
+
+          <div class="footer">
+            <table width="100%">
+              <tr>
+                <td class="aligncenter content-block"><a href='{{ .ExternalURL }}'>Sent by FUSAKLA's Alertmanager</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </td>
+      <td></td>
+    </tr>
+  </table>
+
+</body>
+
+</html>
+
+{{ end }}

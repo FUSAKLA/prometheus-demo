@@ -1,0 +1,35 @@
+global:
+  resolve_timeout: 1m
+
+templates:
+  - /etc/alertmanager/templates/*
+
+receivers:
+    - name: 'blackhole'
+
+    - name: metrics-meetup-mailinglist
+      email_configs:
+      - send_resolved: false
+        to: demo@foo.bar
+        from: prometheus-demo@foo.bar
+        smarthost: foo.bar:25
+        auth_username: foo
+        auth_password: bar
+        require_tls: false
+        headers:
+          From: prometheus-demo@foo.bar
+          Subject: 'Prometheus demo'
+          To: demo@foo.bar
+        html: '{{ template "email.prometheus-demo.html" . }}'
+
+
+route:
+  receiver: 'blackhole'
+  group_by: [instance]
+  group_wait: 5s
+  routes:
+    - match:
+        severity: "prometheus-demo"
+      receiver: 'metrics-meetup-mailinglist'
+      continue: false
+      repeat_interval: "999999h"
