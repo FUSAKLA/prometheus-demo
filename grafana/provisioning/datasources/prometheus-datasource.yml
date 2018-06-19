@@ -9,5 +9,6 @@ datasources:
   url: http://prometheus:9090
   isDefault: true
   version: 1
-  # <bool> allow users to edit datasources from the UI.
+  jsonData:
+    timeInterval: 30s
   editable: true

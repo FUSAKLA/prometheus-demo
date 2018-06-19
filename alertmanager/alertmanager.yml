@@ -15,7 +15,7 @@ receivers:
         smarthost: foo.bar:25
         auth_username: foo
         auth_password: bar
-        require_tls: false
+        require_tls: true
         headers:
           From: prometheus-demo@foo.bar
           Subject: 'Prometheus demo'

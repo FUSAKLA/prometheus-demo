@@ -2,8 +2,8 @@ groups:
 - name: demo-alert
   rules:
   - alert: HighRequestCount
-    expr: sum(increase(http_request_duration_seconds_count{endpoint="/demo",instance=~"error-server.*"}[20s])) by (instance) > 20
+    expr: sum(increase(http_request_duration_seconds_count{endpoint="/demo",instance=~"fusakla.*"}[30s])) by (instance) > 100
     labels:
       severity: prometheus-demo
     annotations:
-      title: "There is more than 20 requests per 20s on error-server/demo"
+      title: "There is more than 100 requests per 30s on fusakla.cz/demo"
